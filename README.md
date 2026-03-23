@@ -7,3 +7,5 @@ Task 4- Polymorphism.</br>
 Task 5- Abstraction(using abstract base class).</br>
 Task 6- Magic methods & Operator overloading.</br>
 Task 7- Mini project: Simple inventry system.</br>
+
+This project contains seven tasks. To start, navigate to the desired file (task1–task7) and run the script.

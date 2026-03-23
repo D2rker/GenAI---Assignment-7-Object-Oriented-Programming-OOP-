@@ -1,31 +1,26 @@
-# --- Base Class (from Task 6) ---
+# task 7- Mini project: simple inventry system
+
 class Product:
     def __init__(self, name, price, category):
         self.name = name
-        self.__price = price
+        self.__price = price 
         self.category = category
 
     def get_price(self):
         return self.__price
 
     def __str__(self):
-        return f"Product({self.name}, ${self.__price}, {self.category})"
+        return f"{self.name} ({self.category}) - ${self.__price}"
 
     def __add__(self, other):
         return self.__price + other.get_price()
 
-
-# --- Task 7: Inventory Class ---
 class Inventory:
     def __init__(self):
-        self.products = []  # List to store product objects
+        self.products = []
 
     def add_product(self, product):
         self.products.append(product)
-
-    def remove_product(self, name):
-        # We filter the list to keep everything EXCEPT the product with that name
-        self.products = [p for p in self.products if p.name != name]
 
     def get_total_value(self):
         total = 0
@@ -34,48 +29,33 @@ class Inventory:
         return total
 
     def show_all_products(self):
+        if not self.products:
+            print("Inventory is empty.")
         for p in self.products:
             print(p)
 
-
-# --- Task 7: Store Class (Composition) ---
 class Store:
     def __init__(self, store_name):
         self.store_name = store_name
-        self.inventory = Inventory()  # Store "has an" Inventory
-
-    def add_new_product(self):
-        print(f"\n--- Adding new product to {self.store_name} ---")
-        name = input("Enter product name: ")
-        price = float(input("Enter product price: "))
-        category = input("Enter product category: ")
-
-        new_prod = Product(name, price, category)
-        self.inventory.add_product(new_prod)
-        print(f"Success: {name} added.")
+        self.inventory = Inventory() 
 
     def show_summary(self):
-        print(f"\n--- {self.store_name} Summary ---")
+        self.inventory.show_all_products()
         print(f"Total Items: {len(self.inventory.products)}")
-        print(f"Total Inventory Value: ${self.inventory.get_total_value()}")
+        print(f"Total Value: ${self.inventory.get_total_value()}")
+        print("-" * 35)
 
+my_store = TechStore = Store("Gamer Gear Hub")
 
-# --- TESTING THE SYSTEM ---
+product1 = Product("Mechanical Keyboard", 120.0, "Peripherals")
+product2 = Product("Gaming Mouse", 80.0, "Peripherals")
+product3 = Product("UltraWide Monitor", 450.0, "Displays")
 
-# 1. Creating a Store object
-my_store = Store("Tech Haven")
+my_store.inventory.add_product(product1)
+my_store.inventory.add_product(product2)
+my_store.inventory.add_product(product3)
 
-# 2. Adding 3 products (using the input method)
-for i in range(3):
-    my_store.add_new_product()
-
-# 3. Showing summary
 my_store.show_summary()
 
-# 4. Using __add__ to combine prices of two products
-# Let's take the first two products added to the inventory
-if len(my_store.inventory.products) >= 2:
-    p1 = my_store.inventory.products[0]
-    p2 = my_store.inventory.products[1]
-    combined_price = p1 + p2
-    print(f"\n[Operator Overloading] Price of {p1.name} + {p2.name} = ${combined_price}")
+combined = product1 + product2
+print(f"Combined price of {product1.name} and {product2.name} is ${combined}")
